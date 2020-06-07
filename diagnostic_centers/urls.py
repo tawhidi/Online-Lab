@@ -20,12 +20,10 @@ from .views import (
 app_name = 'diagnostic_centers'
 
 urlpatterns = [
-
+    path('admin-dashboard/<username>/', admin_dashboard, name='admin-dashboard'),
     path('all-centers/', search_paginator, name='all-centers'),
-
     path('lab-admin-login/', admin_login, name='lab-admin-login'),
     path('admin-logout/', admin_logout, name='admin-logout'),
-    path('admin-dashboard/<username>/', admin_dashboard, name='admin-dashboard'),
 
     path('lab-staff-login/', staff_login, name='lab-staff-login'),
     path('staff-logout/', staff_logout, name='staff-logout'),

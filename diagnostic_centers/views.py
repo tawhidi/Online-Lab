@@ -64,7 +64,7 @@ def admin_login(request):
 
 
 # Diagnostic Admin Dashboard
-def admin_dashboard(request, username=None):
+def admin_dashboard(request, username):
     admin = DiagnosticAdmin.objects.get(username=username)
     validated_orders = TestOrder.objects.filter(accepted=True, validation=True, test_info__center=admin.center)
     completed_orders = PaymentValidation.objects.filter(approved_order__payment_type='Full Payment')
@@ -87,6 +87,7 @@ def admin_dashboard(request, username=None):
 
 
 # Diagnostic Admin Logout
+
 def admin_logout(request):
     messages.success(request, 'Logged Out.', extra_tags='html_safe')
     return redirect('diagnostic_centers:lab-admin-login')
@@ -245,7 +246,7 @@ def staff_dashboard(request, id=None, username=None):
 # Diagnostic Staff Logout
 def staff_logout(request):
     # messages.success(request, 'Logged Out.', extra_tags='html_safe')
-    return redirect('diagnostic_centers:staff-login')
+    return redirect('diagnostic_centers:lab-staff-login')
 
 
 

@@ -138,12 +138,12 @@ def staff_rejected(request, id=None, username=None):
 
 # Test add by admin
 def add_test_by_admin(request, username=None):
-
+    admin = DiagnosticAdmin.objects.get(username=username)
     if request.method == 'POST':
         test_add_form = TestAddForm(request.POST, request.FILES or None )
         if test_add_form.is_valid():
             add_test = test_add_form.save(commit=False)
-            admin = DiagnosticAdmin.objects.get(username=username)
+
             add_test.center = DiagnosticCenter.objects.get(id=admin.center.id)
 
             add_test.save()
@@ -154,20 +154,22 @@ def add_test_by_admin(request, username=None):
         test_add_form = TestAddForm()
 
     template = 'tests/add_test.html'
-    context = {'test_add_form': test_add_form}
+    context = {
+    'admin':admin,
+    'test_add_form': test_add_form
+    }
 
     return render(request, template, context)
 
 
 # Add test category by admin
 def add_category_by_admin(request, username=None):
+    admin = DiagnosticAdmin.objects.get(username=username)
     if request.method == 'POST':
         category_add_form = CategoryAddForm(request.POST)
 
         if category_add_form.is_valid():
             add_category = category_add_form.save(commit=False)
-
-            admin = DiagnosticAdmin.objects.get(username=username)
             add_category.center = DiagnosticCenter.objects.get(id=admin.center.id)
 
             add_category.save()
@@ -178,7 +180,10 @@ def add_category_by_admin(request, username=None):
         category_add_form = CategoryAddForm()
 
     template = 'tests/add_category.html'
-    context = {'category_add_form': category_add_form}
+    context = {
+    'admin':admin,
+    'category_add_form': category_add_form
+    }
 
     return render(request, template, context)
 
