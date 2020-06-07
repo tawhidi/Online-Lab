@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Center Details |  Online Lab{% endblock %}
+
+{% block content %}
+
+
+    <!---- Center Details ---->
+    <div class="inner-content">
+        <div class="container">
+            <!-- all tests -->
+            <div class="row">
+                {% for test in tests_by_center %}
+                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                        <div class="card test-box">
+                            <div class="card-title">
+                                <img src="{{ test.image.url }}" class="card-img-top" alt="Oops image missing" width="100%">
+                            </div>
+                            <div class="card-body">
+                                <p class="card-subtitle mb-2 text-muted">{{ test.category }}</p>
+                                <h6 class="">
+                                    <a href="{% url 'tests:test-details' test.id %}">{{ test.test_name }}</a>
+                                </h6>
+                                <p class="card-text">{{ test.center }}</p>
+                                <p class="card-text text-danger price">Price: <span id="price">{{ test.price }}</span> TK</p>
+                                <p class="card-text">{{ test.active_status }}</p>
+                                <a class="btn btn-warning btn-sm order-btn text-center" href="{% url 'tests:order' test.id %}" type="submit">
+                                    ORDER
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

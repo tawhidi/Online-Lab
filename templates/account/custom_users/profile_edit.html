@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit Profile | Online Lab{% endblock %}
+
+{% block content %}
+
+
+<div class="login-bg inner-content pb-4">
+
+    <div class="container">
+        <div class="card-width">
+            <div class="card text-center">
+                <div class="card-header bg-dark text-center">
+                    <h3 class="text-white mb-4 text-capitalize">Edit Your Profile</h3>
+                </div>
+                <div class="card-bottom-img"></div>
+                <div class="card-body">
+                    <!------------------ existing_profile ------------------------>
+                    <form class="login" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <img src="{{ existing_profile.image.url }}" alt="image" height="200" width="300">
+                        {{profile_form.as_p}}
+                        <hr>
+                        <button type="submit" class="btn btn-dark login-bt w-100 my-2">Update</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+{% endblock %}

@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+{% block title %}Home | Online Lab {% endblock %}
+
+{% block content %}
+
+    <!--- Header Image --->
+    <div class="header-image">
+        <div class="container">
+            <div class="header-content">
+                <h1>ONLINE TEST</h1>
+                <h2>booking</h2>
+                <h5>book now any kind of tests</h5>
+                <a href="#welcome" class="btn btn-primary" style="background: grey; border-radius: 7px"> get started
+                    <i class="fa fa-arrow-right pl-2"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!--/ End Header image -->
+
+
+    <!------------------- Main Content ------------------>
+    <div class="welcome container text-dark" id="welcome">
+
+        <!----------------- Search Box --------------->
+        <div class="search-box bg-dark p- my-4" style="background: #485769;border-radius: 5px">
+            <div class="container">
+                <h3 class="text-white mb-4">Search Tests</h3>
+                <form class="search" action="" method="GET">
+                    <div class="input-group input-group">
+                        <input type="text" class="form-control" name='q' placeholder="Type any test's name..."
+                               aria-label="Recipient's username" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-warning searchButton">
+                                SEARCH
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!--/ search end -->
+
+        <!--------------- category ------------>
+        <h3 class="text-uppercase">Categories</h3>
+        <hr>
+        <div class="row">
+            {% for category in all_category %}
+                <div class="col-3 mb-4">
+                    <div class="card">
+                        <div class="card" style="background: #314F70;">
+                           <h4 class="text-center p-4">
+                                <a style="color: #ffffff" href="{% url 'tests:categorise-tests' category.id %}">{{ category.category_name }}</a>
+                           </h4>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <!--/ End Categories -->
+
+
+        <!------------ All tests ----------------->
+        <h3 class="text-uppercase">Available Tests</h3>
+        <hr>
+        <div class="row mt-4">
+            {% for test in all_tests_paginator_data %}
+                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                    <div class="card test-box">
+                        <div class="card-title">
+                            <img src="{{ test.image.url }}" class="card-img-top" alt="..." width="100%">
+                        </div>
+                        <div class="card-body pb-0">
+                            <p class="card-subtitle mb-2 text-muted">{{ test.category }}</p>
+                            <h6 class="">
+                                <a href="{% url 'tests:test-details' test.id %}">{{ test.test_name }}</a>
+                            </h6>
+                            <p class="card-text">{{ test.center }}</p>
+                            <p style="font-size: 16px" class="text-danger price">Discount: <span id="price">{{ test.discount }}</span> TK</p>
+                            <p style="font-size: 16px" class="text-dark price mb-1">Price: <span id="price">{{ test.price }}</span> TK</p>
+                            <a class="btn btn-warning btn-sm order-btn text-center" href="{% url 'tests:order' test.id %}">
+                                ORDER
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <!--/ End Resent List ---->
+
+
+        <!---------- Pagination ---------------->
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item">
+                    {% if all_tests_paginator_data.has_previous %}
+                        <a class="page-link" href="?page=1" aria-label="Previous">
+                            <span aria-hidden="false">&laquo;</span>
+                        </a>
+                    {% endif %}
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#">Page {{ all_tests_paginator_data.number }} of
+                        {{ all_tests_paginator_data.paginator.num_pages }}</a>
+                </li>
+                <li class="page-item">
+                    {% if all_tests_paginator_data.has_next %}
+                        <a class="page-link" href="?page={{ all_tests_paginator_data.next_page_number }}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    {% endif %}
+                </li>
+            </ul>
+        </nav>
+        <a href="{% url 'diagnostic_centers:lab-admin-login' %}">Diagnostic Admin Login</a> <br>
+        <a href="{% url 'diagnostic_centers:lab-staff-login' %}">Diagnostic staff Login</a>
+        <!-- all tests paginator end -->
+    </div>
+    <!--/ End Main Content --->
+
+
+{% endblock content %}
